@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">saturnV1</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="string_profilemenu">Perfil</string>
+    <string name="string_cartamenu">Carta</string>
+    <string name="string_reviewmenu">Reseñas</string>
+    <string name="string_configmenu">Ajustes</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_profile">
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.saturnv1.ui.profile.ProfileFragment"
+        android:label="@string/string_profilemenu"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_carta"
+        android:name="com.example.saturnv1.ui.carta.CartaFragment"
+        android:label="@string/string_cartamenu"
+        tools:layout="@layout/fragment_carta" />
+
+    <fragment
+        android:id="@+id/navigation_reviews"
+        android:name="com.example.saturnv1.ui.reviews.ReviewsFragment"
+        android:label="@string/string_reviewmenu"
+        tools:layout="@layout/fragment_reviews" />
+
+    <fragment
+        android:id="@+id/navigation_config"
+        android:name="com.example.saturnv1.ui.reviews.ReviewsFragment"
+        android:label="@string/string_configmenu"
+        tools:layout="@layout/fragment_config" />
+</navigation>
