@@ -28,6 +28,10 @@ class SignUpFragment : Fragment() {
             showErrorMsg(it)
         }
 
+        signUpviewModel.registerSuccess.observe(viewLifecycleOwner){uid ->
+            goToLogin()
+        }
+
         with(signUpBinding){
             registerButton.setOnClickListener { //Capturar los datos del registro
 
