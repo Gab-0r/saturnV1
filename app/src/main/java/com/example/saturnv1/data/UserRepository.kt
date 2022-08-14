@@ -2,10 +2,13 @@ package com.example.saturnv1.data
 
 
 import android.util.Log
+import com.example.saturnv1.model.User
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -14,6 +17,7 @@ import kotlinx.coroutines.tasks.await
 class UserRepository {
 
     private var auth: FirebaseAuth = Firebase.auth //Referencia a la pestaña de autenticación de firebase
+    private var db = Firebase.firestore
 
     suspend fun registerUser(name_: String, email_: String, pass_: String, confPass_: String) : ResourceRemote <String> {
         return try {
@@ -37,6 +41,18 @@ class UserRepository {
             ResourceRemote.error(message = e.localizedMessage)
         }catch (e: FirebaseNetworkException){
             Log.d("LoginNetwork", e.localizedMessage)
+            ResourceRemote.error(message = e.localizedMessage)
+        }
+    }
+    suspend fun createUser(user_: User): ResourceRemote<String>{
+        return try {
+            db.collection("users").document().set(user_).await()
+            ResourceRemote.success(data = user_.uid)
+        } catch (e: FirebaseFirestoreException) {
+            Log.d("Register", e.localizedMessage)
+            ResourceRemote.error(message = e.localizedMessage)
+        } catch (e: FirebaseFirestoreException){
+            Log.d("Register", e.localizedMessage)
             ResourceRemote.error(message = e.localizedMessage)
         }
     }

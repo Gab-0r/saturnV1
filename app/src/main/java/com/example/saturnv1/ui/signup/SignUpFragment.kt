@@ -28,7 +28,7 @@ class SignUpFragment : Fragment() {
             showErrorMsg(it)
         }
 
-        signUpviewModel.registerSuccess.observe(viewLifecycleOwner){uid ->
+        signUpviewModel.registerSuccess.observe(viewLifecycleOwner){
             goToLogin()
         }
 

@@ -1,18 +1,19 @@
 package com.example.saturnv1.ui.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.saturnv1.data.ResourceRemote
 import com.example.saturnv1.data.UserRepository
+import com.example.saturnv1.model.User
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
 
     private val userRepository = UserRepository()///Repositorio (Fuente de datos  para la aplicación)
+    private lateinit var user: User
 
     private val _registerSuccess: MutableLiveData<String?> = MutableLiveData()
     val registerSuccess: LiveData<String?> = _registerSuccess
@@ -32,12 +33,14 @@ class SignUpViewModel : ViewModel() {
                 else
                 //Si se cumplen todas las validaciones se hace el Login
                 //Lanzar corrutina para operacion en base de datos (Se usa el despachador IO)
-                GlobalScope.launch(Dispatchers.IO) {
+                viewModelScope.launch(Dispatchers.IO) {
                     var result = userRepository.registerUser(name_, email_, pass_, confPass_)
                     result.let {resourceRemote->
                         when(resourceRemote){
                             is ResourceRemote.success -> {
-                                _registerSuccess.postValue(result.data)
+                                user = User(result.data, name_, email_)
+                                createUser(user)
+                                //_registerSuccess.postValue(result.data)
                             }
                             is ResourceRemote.error -> {
                                 var msg = result.message
@@ -57,5 +60,26 @@ class SignUpViewModel : ViewModel() {
                 }
 
 
+    }
+
+    fun createUser(user_: User) {
+        viewModelScope.launch{
+            val result = userRepository.createUser(user_)
+            result.let { resourceRemote ->
+                when(resourceRemote){
+                    is ResourceRemote.success ->{
+                        _registerSuccess.postValue(result.data)
+                        _errorMsg.postValue("Registro exitoso")
+                    }
+                    is ResourceRemote.error ->{
+                        var msg = result.message
+                        _errorMsg.postValue(msg)
+                    }
+                    else ->{
+                        //don't use
+                    }
+                }
+            }
+        }
     }
 }

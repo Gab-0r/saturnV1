@@ -20,5 +20,13 @@
 
     <string name="string_login">Login</string>
     <string name="string_signUp">SignUp</string>
+    <string name="create_product">create_product</string>
+    <string name="string_product_name">Nombre del producto</string>
+    <string name="string_product_price">Precio del producto</string>
+    <string name="string_product_type">Tipo de producto</string>
+    <string name="string_product_description">Descripción del producto</string>
+    <string name="createproduct_title">Añadir un producto</string>
+    <string name="string_createproduct_button">Crear producto</string>
+    <string name="string_add">Añadir</string>
 
 </resources>

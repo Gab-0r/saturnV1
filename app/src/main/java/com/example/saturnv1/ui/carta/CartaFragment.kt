@@ -5,38 +5,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.saturnv1.databinding.FragmentCartaBinding
 
 class CartaFragment : Fragment() {
 
-    private var _binding: FragmentCartaBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var cartaBinding: FragmentCartaBinding
+    private lateinit var cartaViewModel: CartaViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(CartaViewModel::class.java)
+        cartaViewModel = ViewModelProvider(this)[cartaViewModel::class.java]
+        cartaBinding = FragmentCartaBinding.inflate(inflater, container, false)
+        val view = cartaBinding.root
 
-        _binding = FragmentCartaBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        cartaBinding.AddProductActionButton.setOnClickListener{
+            findNavController().navigate(CartaFragmentDirections.actionNavigationCartaToNavigationCreate())
         }
-        return root
+        return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar!!.show()
     }
+
 }
