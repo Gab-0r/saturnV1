@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+
+import com.example.saturnv1.R
 import com.example.saturnv1.databinding.FragmentCartaBinding
+
 
 class CartaFragment : Fragment() {
 
@@ -17,20 +18,22 @@ class CartaFragment : Fragment() {
     private lateinit var cartaViewModel: CartaViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        cartaViewModel = ViewModelProvider(this)[cartaViewModel::class.java]
+    ): View{
         cartaBinding = FragmentCartaBinding.inflate(inflater, container, false)
-        val view = cartaBinding.root
+        cartaViewModel = ViewModelProvider(this)[cartaViewModel::class.java]
 
+        /*
         cartaBinding.AddProductActionButton.setOnClickListener{
-            findNavController().navigate(CartaFragmentDirections.actionNavigationCartaToNavigationCreate())
+           findNavController().navigate(CartaFragmentDirections.actionNavigationCartaToCreateFragment())
         }
-        return view
-    }
 
+         */
+
+        //return inflater.inflate(R.layout.fragment_carta, container, false)
+        return cartaBinding.root
+    }
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar!!.show()

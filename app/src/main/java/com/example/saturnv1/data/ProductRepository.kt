@@ -15,11 +15,13 @@ class ProductRepository {
     private var auth: FirebaseAuth = Firebase.auth
     private var db = Firebase.firestore
 
-    suspend fun createProduct(product: Product): ResourceRemote<String> {
+    suspend fun createProduct(product: Product): ResourceRemote<String?> {
         return try {
-            val documentProduct = db.collection("users").document(uid).collection("Products").document()
-            db.collection("users").document(uid).collection("Products").document(documentProduct.id).set(user).await()
-            ResourceRemote.success(data = documentProduct.id)
+            val path = auth.uid?.let { db.collection("users").document(it).collection("Products")}
+            val documentProduct = path?.document()
+            product.id = path?.document()?.id
+            documentProduct?.id?.let { path.document(it).set(product).await() }
+            ResourceRemote.success(data = product.id)
         } catch (e: FirebaseFirestoreException) {
             Log.d("CreateProduct", e.localizedMessage)
             ResourceRemote.error(message = e.localizedMessage)

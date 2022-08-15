@@ -40,9 +40,6 @@ class LoginFragment : Fragment() {
             }
         }
 
-
-
-
         return loginBinding.root
     }
 

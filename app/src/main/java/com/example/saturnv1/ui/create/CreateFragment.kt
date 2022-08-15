@@ -1,13 +1,12 @@
 package com.example.saturnv1.ui.create
 
-import android.os.Binder
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.saturnv1.R
+import android.widget.Toast
 import com.example.saturnv1.databinding.FragmentCreateBinding
 
 class CreateFragment : Fragment() {
@@ -18,10 +17,18 @@ class CreateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View{
         createBinding = FragmentCreateBinding.inflate(inflater, container, false)
         createViewModel = ViewModelProvider(this)[createViewModel::class.java]
         val view = createBinding.root
+
+        createViewModel.showMsg.observe(viewLifecycleOwner){msg ->
+            showMsg(msg)
+        }
+
+        createViewModel.createProductSuccess.observe(viewLifecycleOwner){
+
+        }
 
         with(createBinding){
             createproductButton.setOnClickListener{
@@ -31,10 +38,12 @@ class CreateFragment : Fragment() {
                     productpriceInputText.text.toString().toInt(),
                     productdescriptionInputText.text.toString()
                 )
-
-
             }
         }
         return view
+    }
+
+    private fun showMsg(msg: String?) {
+        Toast.makeText(requireActivity(), msg, Toast.LENGTH_LONG).show()
     }
 }
