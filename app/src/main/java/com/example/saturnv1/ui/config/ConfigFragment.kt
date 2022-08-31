@@ -10,10 +10,6 @@ import com.example.saturnv1.R
 
 class ConfigFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ConfigFragment()
-    }
-
     private lateinit var viewModel: ConfigViewModel
 
     override fun onCreateView(
